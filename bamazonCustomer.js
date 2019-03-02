@@ -9,21 +9,15 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  runSearch();
+con.connect(function(err) {
+  if (err) {
+    console.log("error connecting:" + err.stack);
+    return;
+  }
+
+    console.log("connected as id" + con.threadId);
 });
 
-function runSearch() {
-  inquirer
-    .prompt({
-      name: "action",
-      type: "list",
-      message: "What would like to purchase?",
-    })
-    .then(function(answer) {
-      switch (answer.action) {
-        case
-      }
-    })
-}
+con.query("SELECT * FROM products", function(err,data) {
+  console.log("What would you like to order ?");
+});
