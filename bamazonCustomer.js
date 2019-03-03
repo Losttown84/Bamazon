@@ -20,16 +20,19 @@ connection.connect(function(err) {
 
 function start() {
   inquirer
-  .prompt(
-    {
+  .prompt([{
     name: "name",
     type: "input",
-    message: "What's your name"
-  },
-
-  )
-  .then(function(answer) {
-    if (answer.)
-  })
-
-}
+    message: "What\'s your name?",
+  }, {
+    name: "departments",
+    type: "list",
+    message: "What department would you like to shop in?",
+    choices: ["GAMES", "MOVIES", "CLOTHING", "ACCESSIORES", "GROCERY"],
+    default: 3,
+  }, {
+    name: "products",
+    type: "list",
+    message: "What product would you like to buy?",
+    choices: ["GAMES, MOVIES, CLOTHING, SWIMWEAR, SHOES, ACCESSIORES, GROCERY, ALCOHOL"],
+  }
