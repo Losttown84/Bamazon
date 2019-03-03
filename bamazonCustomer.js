@@ -10,13 +10,10 @@ var connection = mysql.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) {
-    console.log("error connecting:" + err.stack);
-    return;
-  }
-
-    console.log("connected as id" + con.threadId);
-});
+  if (err) throw err;
+  console.log("connected as id" + connection);
+  startPrompt();
+});  
 
 con.query("SELECT * FROM products", function(err,data) {
   console.log("What would you like to order ?");
