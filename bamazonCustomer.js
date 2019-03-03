@@ -15,4 +15,21 @@ connection.connect(function(err) {
     if (err) throw err;
     console.log(result);
   });
+  start();
 });
+
+function start() {
+  inquirer
+  .prompt(
+    {
+    name: "name",
+    type: "input",
+    message: "What's your name"
+  },
+
+  )
+  .then(function(answer) {
+    if (answer.)
+  })
+
+}
