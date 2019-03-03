@@ -9,18 +9,10 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
-con.connect(function(err) {
+connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id" + connection);
-  start();
-});  
-
-function start() {
-  inquirer
-    .prompt({
-      message: "Bamazon Shop - What department",
-      type: "list",
-      message: "What's your order?",
-      choices: ["PURCHASE", "EXIT"]
-    })
-    .then
+  connection.query("SELECT * FROM products", function(err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
+});
