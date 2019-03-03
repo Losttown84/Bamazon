@@ -12,9 +12,15 @@ var connection = mysql.createConnection({
 con.connect(function(err) {
   if (err) throw err;
   console.log("connected as id" + connection);
-  startPrompt();
+  start();
 });  
 
-con.query("SELECT * FROM products", function(err,data) {
-  console.log("What would you like to order ?");
-});
+function start() {
+  inquirer
+    .prompt({
+      message: "Bamazon Shop - What department",
+      type: "list",
+      message: "What's your order?",
+      choices: ["PURCHASE", "EXIT"]
+    })
+    .then
