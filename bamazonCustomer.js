@@ -11,28 +11,37 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  connection.query("SELECT * FROM products", function(err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
-  start();
+  console.log("connected as id" + connection.threadId);
 });
 
-function start() {
-  inquirer
-  .prompt([{
-    name: "name",
-    type: "input",
-    message: "What\'s your name?",
-  }, {
-    name: "departments",
-    type: "list",
-    message: "What department would you like to shop in?",
-    choices: ["GAMES", "MOVIES", "CLOTHING", "ACCESSIORES", "GROCERY"],
-    default: 3,
-  }, {
-    name: "products",
-    type: "list",
-    message: "What product would you like to buy?",
-    choices: ["GAMES, MOVIES, CLOTHING, SWIMWEAR, SHOES, ACCESSIORES, GROCERY, ALCOHOL"],
-  }
+
+
+connection.query("SELECT * FROM products", function(err, result) {
+    console.log(result);
+    for (var i = 0; i < result.length; i++) {
+      console.log("Item ID: " + result[i].ItemId + "\nName of Product: " + result[i].productName + "\nPrice: " + "$" + result[i].price + "\n=======================")
+    }
+  });
+
+  connection.query("SELECT * FROM products", function(err, result) {
+    if (err) throw err;
+    
+  function start() {
+  inquirer.prompt([{
+//     name: "name",
+//     type: "input",
+//     message: "What\'s your name?",
+//   }, {
+//     name: "departments",
+//     type: "list",
+//     message: "What department would you like to shop in?",
+//     choices: ["GAMES", "MOVIES", "CLOTHING", "ACCESSIORES", "GROCERY"],
+//     default: 3,
+//   }, {
+//   //   name: "products",
+//   //   type: "list",
+//   //   message: "What product would you like to buy?",
+//   //   choices: ["GAMES, MOVIES, CLOTHING, SWIMWEAR, SHOES, ACCESSIORES, GROCERY, ALCOHOL"],
+//   // }]).then((answers) => {
+//   //   console.log(`\n Hi ${answers.name}.`)
+//   // });
