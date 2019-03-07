@@ -20,7 +20,7 @@ inquirer.prompt([{
   list: function() {
       var productsArray = [];
       for (var i = 0; i < res.length; i++) {
-          productsArray.push(res[i].item_id);
+          productsArray.push(res[i].ItemId);
       }
       return productsArray;
   },
@@ -36,31 +36,34 @@ inquirer.prompt([{
 
 
   var arrNum = custChoiceID - 1;
+  connection.query("SELECT * FROM products WHERE ItemId = " +custChoiceID, function(error,data){
+    console.log("this is our product!", error, data);
 
-  var chosenProduct = res[arrNum];
-
-
-  console.log("You chose:  " + custChoiceID + " | " + chosenProduct.product_name);
-
-  var unitNum = custAnswer.unitNum.trim();
-  console.log("The amount of products you're about to buy: " + unitNum);
+    var chosenProduct = data[0];
 
 
-  var itemStocks = chosenProduct.stock_quantity;
-
-  if (unitNum < chosenProduct.stock_quantity) {
-      var newQuantity = chosenProduct.stock_quantity - unitNum
-
-      connection.query("UPDATE products SET ? WHERE ?", [{
-          stock_quantity: newQuantity
-      }, {
-          item_id: chosenProduct.item_id
-      }], function(err) {
-          if (err) throw err;
-          console.log("Your order has been placed!");
-          console.log("Total cost is $" + (unitNum * chosenProduct.price));
-      })
-  } else {
-    console.log("Insufficient quantity."); 
-  };
+    console.log("You chose:  " + custChoiceID + " | " + chosenProduct.product_name);
+  
+    var unitNum = custAnswer.unitNum.trim();
+    console.log("The amount of products you're about to buy: " + unitNum);
+  
+  
+    var itemStocks = chosenProduct.stockTotal;
+  
+    if (unitNum < chosenProduct.stockTotal) {
+        var newQuantity = chosenProduct.stockTotal - unitNum
+  
+        connection.query("UPDATE products SET ? WHERE ?", [{
+            stockTotal: newQuantity
+        }, {
+            ItemId: chosenProduct.ItemId
+        }], function(err) {
+            if (err) throw err;
+            console.log("Your order has been placed!");
+            console.log("Total cost is $" + (unitNum * chosenProduct.price));
+        })
+    } else {
+      console.log("Insufficient quantity."); 
+    };
+  });
 });
